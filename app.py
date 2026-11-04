@@ -1,4 +1,3 @@
-
 import json
 from collections import Counter
 
@@ -33,6 +32,22 @@ JUDGE_SCHEMA = {
     },
     "required": ["winner", "reason", "best_sentence"],
 }
+
+TOPIC_CATEGORIES = {
+    "AI·기술": [
+        "AI를 활용한 과제 제출을 허용해야 하는가?",
+        "AI가 인간의 일자리를 대체하는 것은 긍정적인가?",
+    ],
+    "교육": [
+        "대학 강의 출석을 자율화해야 하는가?",
+        "대학 시험에서 오픈북 시험을 확대해야 하는가?",
+    ],
+    "사회": [
+        "주 4일 근무제를 도입해야 하는가?",
+    ],
+}
+
+CUSTOM_TOPIC = "직접 입력"
 
 AVATARS = {"찬성봇": "🟦", "반대봇": "🟥"}
 
@@ -128,10 +143,21 @@ st.caption("11주차 STEP 7 · Streamlit 웹앱 · 심사위원 3명")
 with st.sidebar:
     st.header("⚙️ 토론 설정")
 
-    topic = st.text_input(
-        "토론 주제",
-        value="AI를 이용하여 과제를 제출해도 되는가?",
+    category = st.selectbox(
+        "토론 카테고리",
+        [*TOPIC_CATEGORIES, CUSTOM_TOPIC],
     )
+
+    if category == CUSTOM_TOPIC:
+        topic = st.text_input(
+            "토론 주제",
+            placeholder="토론할 주제를 입력하세요",
+        )
+    else:
+        topic = st.selectbox(
+            "토론 주제",
+            TOPIC_CATEGORIES[category],
+        )
 
     pro_style = st.selectbox(
         "찬성봇 말투",
