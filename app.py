@@ -38,3 +38,9 @@ if st.button("+1"):
     count = count + 1                       # 누르면 1 늘림
 
 st.metric("누른 횟수", count)
+
+# 🧪 [실습 1-3] Colab 안에서 [+1] 세 번 누르기 (요청 없음)
+app_test = open_app()
+for _ in range(3):
+    app_test.button[0].click().run()           # 누를 때마다 app.py 가 처음부터 다시 실행됨
+print("세 번 누른 뒤 :", app_test.metric[0].value)
